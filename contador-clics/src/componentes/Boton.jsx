@@ -1,4 +1,4 @@
-import React from React;
+import React from 'react';
 
 function Boton({texto, esBotonDeClic, manejarClic}){
   return(
@@ -9,3 +9,5 @@ function Boton({texto, esBotonDeClic, manejarClic}){
     </button>
   );
 }
+
+export default Boton;
