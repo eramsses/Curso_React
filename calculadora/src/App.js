@@ -12,11 +12,16 @@ function App() {
   const [input, setInput] = useState('');
 
   const agregarInput = val => {
-    setInput(input + val)
+    setInput(input + val);
   };
 
   const calcularResultado = () => {
-    setInput(evaluate(input));
+    if (input) {
+      setInput(evaluate(input));
+    }else{
+      alert("Ingrese un valor.")
+    }
+    
   };
 
   return (
@@ -40,7 +45,7 @@ function App() {
             <Boton manejarClic={agregarInput}>4</Boton>
             <Boton manejarClic={agregarInput}>5</Boton>
             <Boton manejarClic={agregarInput}>6</Boton>
-            <Boton manejarClic={agregarInput}>X</Boton>
+            <Boton manejarClic={agregarInput}>*</Boton>
           </div>
           <div className='fila'>
             <Boton manejarClic={agregarInput}>1</Boton>
