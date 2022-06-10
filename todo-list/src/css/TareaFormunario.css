@@ -1,0 +1,16 @@
+.tarea-formulario{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;    
+}
+
+.tarea-input{
+    width: 400px;
+    font-size: 18px;
+    background-color: azure;
+    padding: 14px 32px 14px 16px;
+    border: 2px solid rgb(41, 151, 31);
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
