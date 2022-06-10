@@ -3,7 +3,7 @@ import '../css/TareaFormulario.css'
 
 function TareaFormulario(props){
     return (
-        <form>
+        <form className="tarea-formulario">
             <input
                 className="tarea-input"
                 type='text'

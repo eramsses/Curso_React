@@ -14,3 +14,16 @@
     border-radius: 4px 0 0 4px;
     outline: none;
 }
+
+.tarea-boton {
+    padding: 16px;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    outline: none;
+    background-color: green;
+    color: azure;
+    text-transform: capitalize;
+}
