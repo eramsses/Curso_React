@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 function Boton({texto, esBotonDeClic, manejarClic}){
   return(
     <button 
