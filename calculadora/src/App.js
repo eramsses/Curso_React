@@ -1,14 +1,14 @@
 import './App.css';
 import logo from './imagenes/FreeCodeCamp_logo.png'
 import Boton from './componentes/Boton'
-import BotonClear from './css/BotonClear';
+import BotonClear from './componentes/BotonClear';
 import Pantalla from './componentes/Pantalla';
 import {useState} from 'react';
 
 
 function App() {
 
-  const [input, setInput] = useState('0');
+  const [input, setInput] = useState('');
 
   const agregarInput = val => {
     setInput(input + val)
@@ -29,7 +29,7 @@ function App() {
             <Boton manejarClic={agregarInput}>7</Boton>
             <Boton manejarClic={agregarInput}>8</Boton>
             <Boton manejarClic={agregarInput}>9</Boton>
-            <Boton>/</Boton>
+            <Boton manejarClic={agregarInput}>/</Boton>
           </div>
           <div className='fila'>
             <Boton manejarClic={agregarInput}>4</Boton>
@@ -50,7 +50,7 @@ function App() {
             <Boton manejarClic={agregarInput}>+</Boton>
           </div>
           <div className='fila'>
-            <BotonClear>Limpiar</BotonClear>
+            <BotonClear manejarClear={() => setInput('')}>Limpiar</BotonClear>
           </div>
         </div>
     </div>
