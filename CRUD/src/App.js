@@ -7,11 +7,23 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [editMode, setEditMode] = useState(false)
   const [id, setId] = useState("")
+  const [error, setError] = useState(null)
+
+
+  const validateForm = () => {
+    let isValid = true
+    setError(null)
+
+    if (isEmpty(task)){
+      setError("Debes ingresar una tarea.")
+      isValid = false
+    }
+    return isValid
+  }
 
   const addTask = (e) => {
     e.preventDefault()
-    if(isEmpty(task)){
-      console.log("Task vacío")
+    if(!validateForm()){
       return
     }
     
@@ -27,8 +39,7 @@ function App() {
 
   const saveTask = (e) => {
     e. preventDefault()
-    if(isEmpty(task)){
-      console.log("Task vacío")
+    if(!validateForm()){
       return
     }
 
@@ -61,7 +72,7 @@ function App() {
           <h4 className="text-center">Lista de Tareas</h4>
             {
               size(tasks) === 0 ?
-                <h5 className="text-center">No hay tareas</h5>
+                <li className="list-group-item">No hay tareas</li>
               :
                 <ul className="list-group">
                 {
@@ -89,11 +100,15 @@ function App() {
         <div className="col-md-4">
           <h4 className="text-center">{editMode ? "Modificar Tarea" : "Agregar Tarea"}</h4>
           <form onSubmit={editMode? saveTask: addTask}>
+            {
+              error && <span className="text-danger mb-3">{error}</span>
+            }
             <input className="form-control mb-2" type={"text"} 
             placeholder="Ingrese la tarea"
             onChange={(text) => setTask(text.target.value)}
             value={task}
             />
+            
             <div className="d-grid gap-2">
               <button className={editMode ?"btn btn-outline-warning" : "btn btn-outline-primary"} type="submit" >{editMode ? "Modificar" : "Agregar"}</button>
             </div>
