@@ -5,6 +5,8 @@ import shortid from "shortid"
 function App() {
   const [task, setTask] = useState("")
   const [tasks, setTasks] = useState([])
+  const [editMode, setEditMode] = useState(false)
+  const [id, setId] = useState("")
 
   const addTask = (e) => {
     e.preventDefault()
@@ -23,13 +25,31 @@ function App() {
     setTask("")
   }
 
+  const saveTask = (e) => {
+    e. preventDefault()
+    if(isEmpty(task)){
+      console.log("Task vacío")
+      return
+    }
+
+    const editedTasks = tasks.map(item => item.id === id ? {id, name: task} : item)
+
+    setTasks(editedTasks)
+    setEditMode(false)
+    setId("")
+    setTask("")
+
+  }
+
   const deleteTask = (id) => {
     const filteredTasks = tasks.filter(task => task.id !== id)
     setTasks(filteredTasks)
   }
 
-  const editTask = (id) => {
-
+  const editTask = (theTask) => {
+    setEditMode(true)
+    setId(theTask.id)
+    setTask(theTask.name)
   }
 
   return (
@@ -49,7 +69,7 @@ function App() {
                     <li className="list-group-item" key={task.id}>
                     <span>{task.name}</span>
                     <button className="btn btn-warning btn-sm float-end"
-                    onClick={() => editTask(task.id)}
+                    onClick={() => editTask(task)}
                     >
                       Editar
                     </button>
@@ -67,15 +87,15 @@ function App() {
             }
         </div>
         <div className="col-md-4">
-          <h4 className="text-center">Formulario</h4>
-          <form onSubmit={addTask}>
+          <h4 className="text-center">{editMode ? "Modificar Tarea" : "Agregar Tarea"}</h4>
+          <form onSubmit={editMode? saveTask: addTask}>
             <input className="form-control mb-2" type={"text"} 
             placeholder="Ingrese la tarea"
             onChange={(text) => setTask(text.target.value)}
             value={task}
             />
             <div className="d-grid gap-2">
-              <button className="btn btn-outline-primary" type="submit" >Agregar</button>
+              <button className={editMode ?"btn btn-outline-warning" : "btn btn-outline-primary"} type="submit" >{editMode ? "Modificar" : "Agregar"}</button>
             </div>
           </form>
         </div>
