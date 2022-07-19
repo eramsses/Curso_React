@@ -1,6 +1,7 @@
 import { isEmpty, size } from "lodash"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import shortid from "shortid"
+import { getCollection } from "./firebase/action"
 
 function App() {
   const [task, setTask] = useState("")
@@ -9,6 +10,16 @@ function App() {
   const [id, setId] = useState("")
   const [error, setError] = useState(null)
 
+  useEffect(() => {
+    (async () => {
+      const result = await getCollection("tasks")
+      console.log(result)
+      if(result.statusResponse){
+        setTasks(result.data)
+      }
+
+    })()
+  }, [])
 
   const validateForm = () => {
     let isValid = true
@@ -38,7 +49,7 @@ function App() {
   }
 
   const saveTask = (e) => {
-    e. preventDefault()
+    e.preventDefault()
     if(!validateForm()){
       return
     }
@@ -65,7 +76,7 @@ function App() {
 
   return (
     <div className="container mt-5">
-      <h1>Tareas</h1>
+      <h1>Lista de Tareas</h1>
       <hr/>
       <div className="row">
         <div className="col-md-8">
