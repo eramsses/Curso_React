@@ -1,7 +1,6 @@
 import { isEmpty, size } from "lodash"
 import React, { useState, useEffect } from "react"
-import shortid from "shortid"
-import { getCollection } from "./firebase/action"
+import { getCollection, addDocument, updateDocument, deleteDocument } from "./firebase/actions"
 
 function App() {
   const [task, setTask] = useState("")
@@ -13,7 +12,6 @@ function App() {
   useEffect(() => {
     (async () => {
       const result = await getCollection("tasks")
-      console.log(result)
       if(result.statusResponse){
         setTasks(result.data)
       }
@@ -32,25 +30,38 @@ function App() {
     return isValid
   }
 
-  const addTask = (e) => {
+  const addTask = async(e) => {
     e.preventDefault()
     if(!validateForm()){
       return
     }
     
+    const result = await addDocument("tasks", {name: task})
+    if(!result.statusResponse){
+      setError(result.error)
+      return
+    }
+
     const newTask = {
-      id : shortid.generate(),
+      id : result.data.id,
       name: task
     }
-    
+
     setTasks([...tasks, newTask])
 
     setTask("")
   }
 
-  const saveTask = (e) => {
+  const saveTask = async(e) => {
     e.preventDefault()
     if(!validateForm()){
+      return
+    }
+
+    const result = await updateDocument("tasks", id, {name: task})
+
+    if(!result.statusResponse){
+      setError(result.error)
       return
     }
 
@@ -63,7 +74,14 @@ function App() {
 
   }
 
-  const deleteTask = (id) => {
+  const deleteTask = async(id) => {
+    const result = await deleteDocument("tasks", id)
+
+    if(!result.statusResponse){
+      setError(result.error)
+      return
+    }
+
     const filteredTasks = tasks.filter(task => task.id !== id)
     setTasks(filteredTasks)
   }
